@@ -1,0 +1,74 @@
+{% extends 'base.html' %} {% block body %}
+
+<div class="container my-3">
+  <h2>Add a Todo</h2>
+  <!-- Add action and menthod to Send Data into Code -->
+  <form action="/" method="post">
+    <div class="mb-3">
+      <label for="title" class="form-label">Todo Title</label>
+      <!-- Add name in Input to Fetch Data Entered 
+            in the Todo Title -->
+      <input
+        type="text"
+        class="form-control"
+        id="title"
+        aria-describedby="emailHelp"
+        name="title"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="desc" class="form-label">Todo Description</label>
+      <input type="text" class="form-control" id="desc" name="description" />
+    </div>
+    <button type="submit" class="btn btn-dark">Submit</button>
+  </form>
+</div>
+
+<div class="container my-3">
+  <h2>Your Todos</h2>
+
+  {% if data|length==0 %}
+
+  <div class="alert alert-dark" role="alert">No Records Found</div>
+
+  {% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Sno</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Time</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in data %}
+      <tr>
+        <th scope="row">{{loop.index}}</th>
+        <td>{{item.1}}</td>
+        <td>{{item.2}}</td>
+        <td>{{item.3}}</td>
+        <td>
+          <a
+            href="/update/{{item.0}}"
+            type="button"
+            class="btn btn-outline-dark btn-sm mx-1"
+          >
+            Update
+          </a>
+
+          <a
+            href="/delete/{{item.0}}"
+            type="button"
+            class="btn btn-outline-dark btn-sm mx-1"
+          >
+            Delete
+          </a>
+        </td>
+      </tr>
+      {% endfor %} {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock body %}
